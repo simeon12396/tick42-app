@@ -1,11 +1,13 @@
+import { TEndPoint, TRequest } from "../misc/misc";
+
 const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
 };
 
-const httpService = async (endPoint: string, requestType: string): Promise<any> => {
+const httpService = async (requestType: TRequest, endPoint: TEndPoint): Promise<any> => {
   if (requestType === "get") {
-    const response = await fetch(endPoint, {
+    const response = await fetch(`data/${endPoint}.json`, {
       method: "get",
       headers,
     });

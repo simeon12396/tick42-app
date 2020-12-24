@@ -1,7 +1,7 @@
 import "./reset.css";
 import Routing from "./routing";
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <div className="App">
       <Routing />

@@ -2,20 +2,20 @@ import { AnyAction } from "redux";
 import { ICompany } from "../../actions/companies/companiesActions";
 import * as companies from "../../types/companies/companiesTypes";
 
-type TInitialState = {
-  companies: ICompany[] | null;
+type TState = {
+  rawData: ICompany[] | null;
 };
 
-const initialState: TInitialState = {
-  companies: null,
+const initialState: TState = {
+  rawData: null,
 };
 
-const companiesReducer = (state = initialState, action: AnyAction) => {
-  switch (action.type) {
+const companiesReducer = (state = initialState, { type, payload }: AnyAction) => {
+  switch (type) {
     case companies.SET_COMPANIES:
       return {
         ...state,
-        companies: action.payload,
+        rawData: payload,
       };
     default:
       return state;

@@ -16,7 +16,7 @@ const setCompanies = (payload: ICompany[]) => ({
 
 const fetchCompanies = () => {
   return async (dispatch: Dispatch<AnyAction>) => {
-    const companiesResponse = await httpService("data/companies.json", "get");
+    const companiesResponse = await httpService("get", "companies");
     dispatch(setCompanies(companiesResponse));
   };
 };

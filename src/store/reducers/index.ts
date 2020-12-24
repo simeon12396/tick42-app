@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { companiesReducer } from "./companies/companiesReducer";
+import { companiesReducer } from "./companiesReducer/companiesReducer";
+import { employeesReducer } from "./employeesReducer/employeesReducer";
 
 const persistConfig = {
   key: "root",
@@ -10,7 +11,10 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  companies: companiesReducer,
+  companiesReducer,
+  employeesReducer,
 });
+
+export type TRootState = ReturnType<typeof rootReducer>;
 
 export default persistReducer(persistConfig, rootReducer);
