@@ -4,9 +4,10 @@ const MaterialUITheme = createMuiTheme({
   palette: {
     primary: {
       main: "#08518b",
+      dark: "#000000",
     },
     secondary: {
-      main: "#fff",
+      main: "#ffffff",
     },
     error: {
       main: "#FF0000",

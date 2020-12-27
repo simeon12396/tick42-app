@@ -1,8 +1,10 @@
 import { Accordion, AccordionDetails, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { ICompany } from "../../store/actions/companies/companiesActions";
 import { IEmployee } from "../../store/actions/employees/employeesActions";
 import { TRootState } from "../../store/reducers";
@@ -11,11 +13,11 @@ import CustomAccordionSummary from "./customAccordionSummary";
 const CustomAccordion = (): JSX.Element => {
   const styles = useStyles();
   const companiesSelector = useSelector((state: TRootState) => state.companiesReducer.rawData);
-  //TODO Disregard these job areas, which are duplicated
   const employeesSelector = useSelector((state: TRootState) => state.employeesReducer.rawData);
+  const jobAreas = employeesSelector && _.uniq(employeesSelector.map((e: IEmployee) => e.jobArea));
 
-  if (!companiesSelector || !employeesSelector) {
-    return <h1>Loading....</h1>;
+  if (!companiesSelector || !employeesSelector || !jobAreas) {
+    return <Typography variant="body1">Loading....</Typography>;
   }
 
   return (
@@ -24,18 +26,18 @@ const CustomAccordion = (): JSX.Element => {
 
       <AccordionDetails classes={{ root: styles.accordionDetailsRoot }}>
         {companiesSelector.map((c: ICompany) => (
-          <Typography variant="caption" classes={{ caption: styles.customCaption }} key={c.id}>
+          <NavLink className={styles.customCaption} key={c.id} to={`/company/${c.id}`}>
             {c.name}
-          </Typography>
+          </NavLink>
         ))}
         <Accordion classes={{ root: clsx(styles.accordionRoot, styles.generalAccordion) }}>
           <CustomAccordionSummary ariaControls="employee-job-content" id="employee-job-header" typoVariant="body2" typoTitle="Employee Job Area" />
 
           <AccordionDetails classes={{ root: styles.accordionDetailsRoot }}>
-            {employeesSelector.map((e: IEmployee) => (
-              <Typography variant="caption" classes={{ caption: styles.customCaption }} key={e.id}>
-                {e.jobArea}
-              </Typography>
+            {jobAreas.map((j: string) => (
+              <NavLink className={styles.customCaption} key={j} to={`/job-area/${j}`}>
+                {j}
+              </NavLink>
             ))}
 
             <Accordion classes={{ root: clsx(styles.accordionRoot, styles.generalAccordion) }}>
@@ -43,9 +45,9 @@ const CustomAccordion = (): JSX.Element => {
 
               <AccordionDetails classes={{ root: styles.accordionDetailsRoot }}>
                 {employeesSelector.map((e: IEmployee) => (
-                  <Typography variant="caption" classes={{ caption: styles.customCaption }} key={e.id}>
+                  <NavLink className={styles.customCaption} key={e.id} to={`/employee/${e.id}`}>
                     {`${e.firstName} ${e.lastName}`}
-                  </Typography>
+                  </NavLink>
                 ))}
               </AccordionDetails>
             </Accordion>
@@ -77,6 +79,16 @@ const useStyles = makeStyles((theme) => ({
   },
   customCaption: {
     display: "block",
+    textDecoration: "none",
+    color: theme.palette.primary.dark,
+    opacity: 0.8,
+    transition: "all linear .1s",
+
+    "&:hover": {
+      opacity: 1,
+      color: theme.palette.primary.main,
+      textDecoration: "underline",
+    },
   },
   generalAccordion: {
     marginRight: theme.spacing(2),

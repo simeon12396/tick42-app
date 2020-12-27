@@ -20,8 +20,8 @@ const setEmployees = (payload: IEmployee[]) => ({
 
 const fetchEmployees = () => {
   return async (dispatch: Dispatch<AnyAction>) => {
-    const employeesResponse = await httpService("get", "employees");
-    dispatch(setEmployees(employeesResponse));
+    const response = await httpService("get", "employees");
+    dispatch(setEmployees(response));
   };
 };
 
