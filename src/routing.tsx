@@ -7,6 +7,7 @@ const CompanyDetailsPage = lazy(() => import("./pages/companyDetailsPage/company
 const EmployeeDetailsPage = lazy(() => import("./pages/employeeDetaislPage/employeeDetailsPage"));
 const JobAreaDetailsPage = lazy(() => import("./pages/jobAreaDetailsPage/jobAreaDetailsPage"));
 const ProjectDetailsPage = lazy(() => import("./pages/projectDetailsPage/projectDetailsPage"));
+const AddProjectPage = lazy(() => import("./pages/addProjectPage/addProjectPage"));
 
 const Routing = (): JSX.Element => (
   <Router>
@@ -18,6 +19,7 @@ const Routing = (): JSX.Element => (
           <Route exact path="/employee/:id" component={EmployeeDetailsPage} />
           <Route exact path="/job-area/:jobAreaName" component={JobAreaDetailsPage} />
           <Route exact path="/project-details/:id" component={ProjectDetailsPage} />
+          <Route exact path="/add-project/" component={AddProjectPage} />
         </Switch>
       </Suspense>
     </MainLayout>

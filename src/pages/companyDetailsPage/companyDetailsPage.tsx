@@ -95,7 +95,7 @@ const CompanyDetailsPage = (): JSX.Element => {
         ))}
       </div>
 
-      <CustomFabButton children={<AddIcon />} color="primary" className={styles.plusButton} />
+      <CustomFabButton isLink={true} children={<AddIcon />} color="primary" className={styles.plusButton} />
     </div>
   );
 };
