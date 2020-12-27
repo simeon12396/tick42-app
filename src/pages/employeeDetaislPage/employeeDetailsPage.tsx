@@ -1,4 +1,5 @@
 import { makeStyles, Typography } from "@material-ui/core";
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
@@ -44,25 +45,25 @@ const EmployeeDetailsPage = () => {
   return (
     <div>
       <Typography variant="h5">Project details regarding to particular employee:</Typography>
-      <div>
+      <div className={styles.flexbox}>
         <Typography variant="body1" className={styles.employeeLabel}>
           Name:
         </Typography>
         <Typography variant="body2">{foundEmployeeFullName}</Typography>
       </div>
-      <div>
+      <div className={styles.flexbox}>
         <Typography variant="body1" className={styles.employeeLabel}>
           Date of birth:
         </Typography>
         <Typography variant="body2">{foundEmployee.dateOfBirth.slice(0, 10)}</Typography>
       </div>
-      <div>
+      <div className={styles.flexbox}>
         <Typography variant="body1" className={styles.employeeLabel}>
           Job title:
         </Typography>
         <Typography variant="body2">{foundEmployee.jobTitle}</Typography>
       </div>
-      <div>
+      <div className={styles.flexbox}>
         <Typography variant="body1" className={styles.employeeLabel}>
           Job Area:
         </Typography>
@@ -70,13 +71,13 @@ const EmployeeDetailsPage = () => {
           <Typography variant="body2">{foundEmployee.jobArea}</Typography>
         </NavLink>
       </div>
-      <div>
+      <div className={styles.flexbox}>
         <Typography variant="body1" className={styles.employeeLabel}>
           Job Type:
         </Typography>
         <Typography variant="body2">{foundEmployee.jobType}</Typography>
       </div>
-      <div>
+      <div className={clsx(styles.flexbox, styles.participationContainer)}>
         <Typography variant="body1" className={styles.employeeLabel}>
           Job Participation:
         </Typography>
@@ -99,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     display: "block",
-    textDecoration: "none",
+    textDecoration: "underline",
     color: theme.palette.primary.dark,
     opacity: 0.8,
     transition: "all linear .1s",
@@ -109,5 +110,13 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
       textDecoration: "underline",
     },
+  },
+  flexbox: {
+    display: "flex",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  participationContainer: {
+    maxWidth: 500,
   },
 }));

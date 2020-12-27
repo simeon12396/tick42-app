@@ -7,7 +7,8 @@ import { ICompanyAddress } from "../../store/actions/companyAddresses/companyAdd
 import { IProject, updateProjects } from "../../store/actions/projects/projectsActions";
 import { TRootState } from "../../store/reducers";
 import CancelIcon from "@material-ui/icons/Cancel";
-import CustomButton from "../../components/common/customButton/customButton";
+import CustomFabButton from "../../components/customFabButton/customFabButton";
+import AddIcon from "@material-ui/icons/Add";
 
 type TRouteParams = {
   id: string;
@@ -93,6 +94,8 @@ const CompanyDetailsPage = (): JSX.Element => {
           </div>
         ))}
       </div>
+
+      <CustomFabButton children={<AddIcon />} color="primary" className={styles.plusButton} />
     </div>
   );
 };
@@ -128,5 +131,10 @@ const useStyles = makeStyles((theme) => ({
   cancelIcon: {
     fill: theme.palette.error.main,
     marginLeft: theme.spacing(0.5),
+  },
+  plusButton: {
+    position: "fixed",
+    bottom: theme.spacing(5),
+    right: theme.spacing(5),
   },
 }));

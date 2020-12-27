@@ -1,12 +1,13 @@
-import { Button, ButtonProps } from "@material-ui/core";
+import { Button, ButtonProps, Fab } from "@material-ui/core";
+import React from "react";
 import { TButton } from "../../../misc/misc";
 
-interface TCustommButtonprops extends ButtonProps {
+interface TCustommButtonProps extends ButtonProps {
   onClick?: (e: any) => void;
   type: TButton;
 }
 
-const CustomButton = (props: TCustommButtonprops): JSX.Element => {
+const CustomButton = (props: TCustommButtonProps): JSX.Element => {
   const { onClick, type } = props;
 
   if (type === "submit") {
