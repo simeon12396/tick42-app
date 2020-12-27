@@ -66,7 +66,7 @@ const EmployeeDetailsPage = () => {
         <Typography variant="body1" className={styles.employeeLabel}>
           Job Area:
         </Typography>
-        <NavLink to={`/job-area/${foundEmployee.jobArea}`}>
+        <NavLink to={`/job-area/${foundEmployee.jobArea}`} className={styles.link}>
           <Typography variant="body2">{foundEmployee.jobArea}</Typography>
         </NavLink>
       </div>
@@ -96,5 +96,18 @@ const useStyles = makeStyles((theme) => ({
   employeeLabel: {
     color: theme.palette.primary.main,
     marginRight: theme.spacing(1),
+  },
+  link: {
+    display: "block",
+    textDecoration: "none",
+    color: theme.palette.primary.dark,
+    opacity: 0.8,
+    transition: "all linear .1s",
+
+    "&:hover": {
+      opacity: 1,
+      color: theme.palette.primary.main,
+      textDecoration: "underline",
+    },
   },
 }));

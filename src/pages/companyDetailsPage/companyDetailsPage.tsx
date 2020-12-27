@@ -7,6 +7,7 @@ import { ICompanyAddress } from "../../store/actions/companyAddresses/companyAdd
 import { IProject, updateProjects } from "../../store/actions/projects/projectsActions";
 import { TRootState } from "../../store/reducers";
 import CancelIcon from "@material-ui/icons/Cancel";
+import CustomButton from "../../components/common/customButton/customButton";
 
 type TRouteParams = {
   id: string;
@@ -74,7 +75,11 @@ const CompanyDetailsPage = (): JSX.Element => {
       <Typography variant="h5">Company projects: </Typography>
 
       <div>
-        {companyProjects.length === 0 && <Typography variant="body2">Attention! The company doesn't contain any projects!</Typography>}
+        {companyProjects.length === 0 && (
+          <Typography variant="body2" color="error">
+            Attention! The company doesn't contain any projects!
+          </Typography>
+        )}
 
         {companyProjects.map((p: IProject) => (
           <div key={p.id} className={styles.flexbox}>
@@ -84,7 +89,7 @@ const CompanyDetailsPage = (): JSX.Element => {
             <NavLink to={`/project-details/${p.id}`} className={styles.projectValue}>
               {p.name}
             </NavLink>
-            <CancelIcon onClick={() => removeProject(p.id)} />
+            <CancelIcon onClick={() => removeProject(p.id)} className={styles.cancelIcon} />
           </div>
         ))}
       </div>
@@ -119,5 +124,9 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
       textDecoration: "underline",
     },
+  },
+  cancelIcon: {
+    fill: theme.palette.error.main,
+    marginLeft: theme.spacing(0.5),
   },
 }));
