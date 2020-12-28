@@ -9,6 +9,7 @@ import { TRootState } from "../../store/reducers";
 import CancelIcon from "@material-ui/icons/Cancel";
 import CustomFabButton from "../../components/customFabButton/customFabButton";
 import AddIcon from "@material-ui/icons/Add";
+import CustomAlert from "../../components/common/customProgress/customProgress";
 
 type TRouteParams = {
   id: string;
@@ -38,7 +39,7 @@ const CompanyDetailsPage = (): JSX.Element => {
   }, [companyId]);
 
   if (!companiesSelector || !projectsSelector || !companyAddressesSelector) {
-    return <Typography variant="body1">Loading....</Typography>;
+    return <CustomAlert />;
   }
 
   return (

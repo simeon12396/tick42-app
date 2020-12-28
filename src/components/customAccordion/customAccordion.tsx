@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { ICompany } from "../../store/actions/companies/companiesActions";
 import { IEmployee } from "../../store/actions/employees/employeesActions";
 import { TRootState } from "../../store/reducers";
+import CustomAlert from "../common/customProgress/customProgress";
 import CustomAccordionSummary from "./customAccordionSummary";
 
 const CustomAccordion = (): JSX.Element => {
@@ -17,7 +18,7 @@ const CustomAccordion = (): JSX.Element => {
   const jobAreas = employeesSelector && _.uniq(employeesSelector.map((e: IEmployee) => e.jobArea));
 
   if (!companiesSelector || !employeesSelector || !jobAreas) {
-    return <Typography variant="body1">Loading....</Typography>;
+    return <CustomAlert />;
   }
 
   return (

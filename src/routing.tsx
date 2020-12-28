@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import CustomAlert from "./components/common/customProgress/customProgress";
 import MainLayout from "./layouts/mainLayout/mainLayout";
 
 const HomePage = lazy(() => import("./pages/homePage/homePage"));
@@ -12,7 +13,7 @@ const AddProjectPage = lazy(() => import("./pages/addProjectPage/addProjectPage"
 const Routing = (): JSX.Element => (
   <Router>
     <MainLayout>
-      <Suspense fallback={<div>{"Loading...."}</div>}>
+      <Suspense fallback={<div>{<CustomAlert />}</div>}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/company/:id" component={CompanyDetailsPage} />
