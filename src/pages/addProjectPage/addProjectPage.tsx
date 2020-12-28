@@ -1,6 +1,6 @@
 import { FormControl } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { ChangeEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/common/customButton/customButton";
 import CustomTextField from "../../components/common/customTextField/customTextField";
@@ -8,8 +8,7 @@ import CustomDropdown from "../../components/customDropdown/customDropdown";
 import { TRootState } from "../../store/reducers";
 import SendIcon from "@material-ui/icons/Send";
 import { addNewProject, IProject } from "../../store/actions/projects/projectsActions";
-import { IEmployee } from "../../store/actions/employees/employeesActions";
-import { ICompany } from "../../store/actions/companies/companiesActions";
+import { TOnChangeEvent } from "../../misc/misc";
 
 const AddProjectPage = (): JSX.Element => {
   const styles = useStyles();
@@ -26,13 +25,14 @@ const AddProjectPage = (): JSX.Element => {
   const [id, setId] = useState<string>("");
   const [name, setName] = useState<string>("");
 
-  const onChangeEmployee = (e: ChangeEvent<{ name?: string | undefined; value: unknown }>) => setEmployeeId(e.target.value as string);
-  const onChangeCompany = (e: ChangeEvent<{ name?: string | undefined; value: unknown }>) => setCompanyId(e.target.value as string);
-  const onChangeId = (e: ChangeEvent<{ name?: string | undefined; value: unknown }>) => setId(e.target.value as string);
-  const onChangeName = (e: ChangeEvent<{ name?: string | undefined; value: unknown }>) => setName(e.target.value as string);
-  const onChangeDepartment = (e: ChangeEvent<{ name?: string | undefined; value: unknown }>) => setDepartmentId(e.target.value as string);
+  const onChangeEmployee = (e: TOnChangeEvent) => setEmployeeId(e.target.value as string);
+  const onChangeCompany = (e: TOnChangeEvent) => setCompanyId(e.target.value as string);
+  const onChangeId = (e: TOnChangeEvent) => setId(e.target.value as string);
+  const onChangeName = (e: TOnChangeEvent) => setName(e.target.value as string);
+  const onChangeDepartment = (e: TOnChangeEvent) => setDepartmentId(e.target.value as string);
 
-  const onClickSubmit = () => {
+  const onClickSubmit = (e: FormEvent) => {
+    e.preventDefault();
     const projectData = { id, name, employeesId: [employeeId], companyId: companyId, department: departmentId };
     dispatch(addNewProject(projectData));
   };

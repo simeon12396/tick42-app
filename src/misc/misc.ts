@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { ICompany } from "../store/actions/companies/companiesActions";
 import { ICompanyAddress } from "../store/actions/companyAddresses/companyAddressesActions";
 import { IEmployee } from "../store/actions/employees/employeesActions";
@@ -15,4 +16,6 @@ type TOption = {
   type: (IEmployee | ICompany | ICompanyAddress | IProject)[];
 };
 
-export type { TRequest, TEndPoint, TVariant, TButton, TOption };
+type TOnChangeEvent = ChangeEvent<{ name?: string | undefined; value: unknown }>;
+
+export type { TRequest, TEndPoint, TVariant, TButton, TOption, TOnChangeEvent };

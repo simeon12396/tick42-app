@@ -1,6 +1,6 @@
 import { TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import CustomDropdown from "../../components/customDropdown/customDropdown";
@@ -30,7 +30,7 @@ const ProjectDetailsPage = () => {
   const dispatch = useDispatch();
 
   const onChangeProjectName = (e: ChangeEvent<{ name?: string | undefined; value: unknown }>) => setProjectName(e.target.value as string);
-  const onClickName = (e: any) => {
+  const onClickName = (e: FormEvent) => {
     e.preventDefault();
     dispatch(updateProjectname({ id, name: projectName }));
   };
@@ -39,7 +39,7 @@ const ProjectDetailsPage = () => {
     dispatch(updateProjectEmployees({ employeesId: updatedProjectEmployees, projectId: foundProjectDetails.id }));
   };
   const onChangeNewEmployee = (e: ChangeEvent<{ name?: string | undefined; value: unknown }>) => setNewEmployeeId(e.target.value as string);
-  const onClickNewEmployee = (e: any) => {
+  const onClickNewEmployee = (e: FormEvent) => {
     e.preventDefault();
     const employeesId = foundProjectDetails.employeesId.find((employeeId: string) => employeeId === newEmployeeId);
 
