@@ -13,7 +13,7 @@ const CustomFabButton = (props: ICustomFabButtonProps): JSX.Element => {
 
   if (isLink) {
     return (
-      <Fab {...props}>
+      <Fab {...props} classes={{ label: styles.fablabelRoot }}>
         <NavLink to="/add-project" className={styles.link}>
           {children}
         </NavLink>
@@ -27,9 +27,16 @@ const CustomFabButton = (props: ICustomFabButtonProps): JSX.Element => {
 export default CustomFabButton;
 
 const useStyles = makeStyles((theme) => ({
+  fablabelRoot: {
+    width: "100%",
+    height: "100%",
+  },
   link: {
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
+    width: "inherit",
+    height: "inherit",
     color: theme.palette.secondary.main,
   },
 }));

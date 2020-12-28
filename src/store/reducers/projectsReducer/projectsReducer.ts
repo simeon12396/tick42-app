@@ -13,7 +13,13 @@ const initialState: TState = {
 const updateProjectName = (projects: IProject[], payload: IUpdateProject) => {
   const foundProject = projects.find((p) => p.id === payload.id);
   const otherProjects = projects.filter((p) => p.id !== payload.id);
-  const hasDifferentName = foundProject && payload.name === foundProject.name ? foundProject.name : payload.name;
+  const hasThatName = otherProjects.find((p) => p.name === payload.name);
+
+  if (hasThatName) {
+    return [...otherProjects, { ...foundProject }];
+  }
+
+  const hasDifferentName = foundProject && hasThatName && payload.name === foundProject.name ? foundProject.name : payload.name;
 
   return [...otherProjects, { ...foundProject, name: hasDifferentName }];
 };
@@ -35,6 +41,16 @@ const assignNewEmployeeWithinTheProject = (projects: IProject[], payload: INewEm
 const removeProjects = (projects: IProject[], payload: IRemoveProjects) => {
   const filteredProjects = projects.filter((p) => p.companyId !== payload.companyId);
   return [...filteredProjects, ...payload.unremovedCompanyProjects];
+};
+
+const addNewProject = (projects: IProject[], payload: IProject) => {
+  const hasProject = projects.find((p: IProject) => p.id === payload.id || p.name === payload.name);
+  debugger;
+  if (hasProject) {
+    return projects;
+  }
+
+  return [...projects, payload];
 };
 
 const projectsReducer = (state = initialState, { type, payload }: AnyAction) => {
@@ -67,7 +83,7 @@ const projectsReducer = (state = initialState, { type, payload }: AnyAction) => 
     case projects.ADD_NEW_PROJECT:
       return {
         ...state,
-        rawData: state.rawData ? [...state.rawData, payload] : [],
+        rawData: addNewProject(state.rawData ? state.rawData : [], payload),
       };
     default:
       return state;
