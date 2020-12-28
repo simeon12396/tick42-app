@@ -1,5 +1,5 @@
 import { AnyAction } from "redux";
-import { INewEmployee, IProject, IUpdateProject, IUpdateProjectEmployees, IUpdateProjects } from "../../actions/projects/projectsActions";
+import { INewEmployee, IProject, IRemoveProjects, IUpdateProject, IUpdateProjectEmployees } from "../../actions/projects/projectsActions";
 import * as projects from "../../types/projects/projectsTypes";
 
 type TState = {
@@ -32,9 +32,8 @@ const assignNewEmployeeWithinTheProject = (projects: IProject[], payload: INewEm
   return foundProject ? [...otherProjects, { ...foundProject, employeesId: [...foundProject.employeesId, payload.newEmployeeId] }] : [];
 };
 
-const updateProjects = (projects: IProject[], payload: IUpdateProjects) => {
+const removeProjects = (projects: IProject[], payload: IRemoveProjects) => {
   const filteredProjects = projects.filter((p) => p.companyId !== payload.companyId);
-  debugger;
   return [...filteredProjects, ...payload.unremovedCompanyProjects];
 };
 
@@ -60,10 +59,15 @@ const projectsReducer = (state = initialState, { type, payload }: AnyAction) => 
         ...state,
         rawData: assignNewEmployeeWithinTheProject(state.rawData ? state.rawData : [], payload),
       };
-    case projects.UPDATE_PROJECTS:
+    case projects.REMOVE_PROJECTS:
       return {
         ...state,
-        rawData: updateProjects(state.rawData ? state.rawData : [], payload),
+        rawData: removeProjects(state.rawData ? state.rawData : [], payload),
+      };
+    case projects.ADD_NEW_PROJECT:
+      return {
+        ...state,
+        rawData: state.rawData ? [...state.rawData, payload] : [],
       };
     default:
       return state;

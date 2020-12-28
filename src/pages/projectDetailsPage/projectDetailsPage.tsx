@@ -76,7 +76,7 @@ const ProjectDetailsPage = () => {
           <Typography variant="body1" className={styles.projectLabel}>
             Assign new employee:
           </Typography>
-          <CustomDropdown name="employee" onChange={onChangeNewEmployee} options={employeesSelector} defaultValue={newEmployeeId} />
+          <CustomDropdown name="employees" onChange={onChangeNewEmployee} options={{ type: employeesSelector }} value={newEmployeeId} />
         </div>
 
         <CustomButton type="submit" onClick={onClickNewEmployee} variant="contained" color="primary" endIcon={<SendIcon />} classes={{ root: styles.customButtonRoot }}>

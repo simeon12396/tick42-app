@@ -25,7 +25,7 @@ interface INewEmployee {
   newEmployeeId: string;
 }
 
-interface IUpdateProjects {
+interface IRemoveProjects {
   companyId: string;
   unremovedCompanyProjects: IProject[];
 }
@@ -45,8 +45,13 @@ const updateProjectEmployees = (payload: IUpdateProjectEmployees) => ({
   payload,
 });
 
-const updateProjects = (payload: IUpdateProjects) => ({
-  type: projects.UPDATE_PROJECTS,
+const removeProjects = (payload: IRemoveProjects) => ({
+  type: projects.REMOVE_PROJECTS,
+  payload,
+});
+
+const addNewProject = (payload: IProject) => ({
+  type: projects.ADD_NEW_PROJECT,
   payload,
 });
 
@@ -62,6 +67,6 @@ const fetchProjects = () => {
   };
 };
 
-export type { IProject, IUpdateProject, IUpdateProjects, IUpdateProjectEmployees, INewEmployee };
+export type { IProject, IUpdateProject, IRemoveProjects, IUpdateProjectEmployees, INewEmployee };
 
-export { fetchProjects, setProjects, updateProjectname, updateProjectEmployees, updateProjects };
+export { fetchProjects, setProjects, updateProjectname, updateProjectEmployees, removeProjects, addNewProject };

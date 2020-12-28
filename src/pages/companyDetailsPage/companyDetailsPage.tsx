@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import { ICompanyAddress } from "../../store/actions/companyAddresses/companyAddressesActions";
-import { IProject, updateProjects } from "../../store/actions/projects/projectsActions";
+import { IProject, removeProjects } from "../../store/actions/projects/projectsActions";
 import { TRootState } from "../../store/reducers";
 import CancelIcon from "@material-ui/icons/Cancel";
 import CustomFabButton from "../../components/customFabButton/customFabButton";
@@ -22,14 +22,14 @@ const CompanyDetailsPage = (): JSX.Element => {
   const projectsSelector = useSelector((state: TRootState) => state.projectsReducer.rawData);
   const companyAddressesSelector = useSelector((state: TRootState) => state.companyAddressesReducer.rawData);
 
-  const [companyProjects, setCompanyProjects] = useState<IProject[] | []>([]);
+  const [companyProjects, setCompanyProjects] = useState<IProject[]>([]);
   const foundCompany = companyAddressesSelector.find((c: ICompanyAddress) => c.companyId === id);
   const { companyId } = foundCompany;
 
   const removeProject = (id: string) => {
     const unremovedCompanyProjects = companyProjects.filter((p: IProject) => p.id !== id);
     setCompanyProjects(unremovedCompanyProjects);
-    dispatch(updateProjects({ companyId, unremovedCompanyProjects }));
+    dispatch(removeProjects({ companyId, unremovedCompanyProjects }));
   };
 
   useEffect(() => {
@@ -76,23 +76,23 @@ const CompanyDetailsPage = (): JSX.Element => {
       <Typography variant="h5">Company projects: </Typography>
 
       <div>
-        {companyProjects.length === 0 && (
+        {companyProjects.length === 0 ? (
           <Typography variant="body2" color="error">
             Attention! The company doesn't contain any projects!
           </Typography>
+        ) : (
+          companyProjects.map((p: IProject) => (
+            <div key={p.id} className={styles.flexbox}>
+              <Typography variant="body1" className={styles.projectLabel}>
+                Name:
+              </Typography>
+              <NavLink to={`/project-details/${p.id}`} className={styles.projectValue}>
+                {p.name}
+              </NavLink>
+              <CancelIcon onClick={() => removeProject(p.id)} className={styles.cancelIcon} />
+            </div>
+          ))
         )}
-
-        {companyProjects.map((p: IProject) => (
-          <div key={p.id} className={styles.flexbox}>
-            <Typography variant="body1" className={styles.projectLabel}>
-              Name:
-            </Typography>
-            <NavLink to={`/project-details/${p.id}`} className={styles.projectValue}>
-              {p.name}
-            </NavLink>
-            <CancelIcon onClick={() => removeProject(p.id)} className={styles.cancelIcon} />
-          </div>
-        ))}
       </div>
 
       <CustomFabButton isLink={true} children={<AddIcon />} color="primary" className={styles.plusButton} />
